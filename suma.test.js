@@ -63,3 +63,29 @@ test('asignacion de objeto', () => {
     expect(() => compileAndroidCode()).toThrow('you are using the wrong JDK');
     expect(() => compileAndroidCode()).toThrow(/JDK/);
   });
+  test("returns undefined by default", () => {
+    const mock = jest.fn();
+  
+    let result = mock("foo");
+  
+    expect(result).toBeUndefined();
+    expect(mock).toHaveBeenCalled();
+    expect(mock).toHaveBeenCalledTimes(1);
+    expect(mock).toHaveBeenCalledWith("foo");
+  });
+  test("mock implementation", () => {
+    const mock = jest.fn(() => "bar");
+    expect(mock("foo")).toBe("bar"); //¿es el valor de "foo" en la funcion mock igual a "bar"?
+    expect(mock).toHaveBeenCalledWith("foo"); // ¿ha sido la función mock llamada con el argumento "foo"?
+  });
+  test("also mock implementation", () => {
+    const mock = jest.fn().mockImplementation(() => "bar");
+    expect(mock("foo")).toBe("bar");
+    expect(mock).toHaveBeenCalledWith("foo");
+  });
+  test("mock return value", () => {
+    const mock = jest.fn();
+    mock.mockReturnValue("bar");
+    expect(mock("foo")).toBe("bar");
+    expect(mock).toHaveBeenCalledWith("foo");
+  });
